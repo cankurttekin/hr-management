@@ -31,8 +31,9 @@ public class Candidate {
     @Column(name = "position", nullable = false)
     private String position;
 
-    @Column(name = "military_status", nullable = false)
-    private String militaryStatus;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private MilitaryStatus militaryStatus;
 
     @Column(name = "notice_period", nullable = false)
     private String noticePeriod;
