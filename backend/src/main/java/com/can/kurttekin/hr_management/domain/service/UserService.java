@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface UserService {
     void registerUser(RegistrationRequest registrationRequest);
-    Optional<User> findUserById(Long userId);
-    Optional<User> findUserByUsername(String username);
+    Optional<User> loadUserById(Long userId);
+    Optional<User> loadUserByUsername(String username);
 }
