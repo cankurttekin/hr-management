@@ -6,7 +6,8 @@ Design a recruitment system. Must include:
 ### Stack
 - Backend: Java 8+, Spring Boot
 - Database: H2(in dev), PostgreSQL(in prod-optional)
-- Frontend: Angular, Ionic Framework, init with min. 10 candidates
+- ~~Frontend: Angular, Ionic Framework, init with min. 10 candidates~~
+- Frontend: React
 ## Details
 ### Backend
 #### Candidates Table:
@@ -45,10 +46,10 @@ Design a recruitment system. Must include:
 - Each candidate should have a "Delete" button next to them.
 
 
-
-## Building & Running
+# Project Completion Details
+## Build & Run
 ## Database
-## Endpoint List
+## Endpoints
 | Action             | HTTP Method | Endpoint                             | Description                                    |
 |--------------------|-------------|--------------------------------------|------------------------------------------------|
 | Aday ekleme        | POST        | /api/candidates                      | Add a new candidate                            |
@@ -56,3 +57,5 @@ Design a recruitment system. Must include:
 | Aday güncelleme    | PUT         | /api/candidates/{id}                 | Update an existing candidate by ID            |
 | Aday silme         | DELETE      | /api/candidates/{id}                 | Delete a candidate by ID                      |
 | Filtreleme         | GET         | /api/candidates?position={position}&militaryStatus={status}&noticePeriod={period} | Filter candidates by position, military status, and notice period |
+| login    | POST         | /api/auth/login                | Login with username and password            |
+| register         | POST      | /api/auth/register                 | Register                      |
