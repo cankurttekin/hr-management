@@ -74,6 +74,15 @@ public class CandidateServiceImpl implements CandidateService {
         return mapToDto(candidate);
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public List<CandidateDto> getCandidatesByCriteria(String position, String militaryStatus, String noticePeriod) {
+        List<Candidate> candidates = candidateRepository.findByCriteria(position, militaryStatus, noticePeriod);
+        return candidates.stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
+    }
+
     /**
      * Updates a candidate by their unique ID and DTO.
      *

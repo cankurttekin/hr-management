@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import AddCandidate from './AddCandidate';
+import FilterCandidates from './FilterCandidates';
 import { AuthContext } from '../contexts/AuthContext';
 
 const NavbarContainer = styled.div`
@@ -99,6 +100,7 @@ const AppName = styled.div`
 
 const Navbar = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
     const { isLoggedIn, user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState(false); // Dropdown state
@@ -108,6 +110,10 @@ const Navbar = () => {
 
     const handleAddCandidateClick = () => {
         setIsModalOpen(true);
+    };
+
+    const handleFilterCandidates = () => {
+        setIsFilterModalOpen(true);
     };
 
     const handleLogout = () => {
@@ -151,14 +157,15 @@ const Navbar = () => {
                             <span className="material-icons">add</span>
                             Ekle
                         </NavbarItem>
-                        <NavbarItem onClick={() => handleNavigation('/filter')}>
-                            <span className="material-icons">bar_chart</span>
+                        <NavbarItem onClick={() => {toggleDropdown(); handleFilterCandidates();}}>
+                            <span className="material-icons">tune</span>
                             Filtre
                         </NavbarItem>
                     </>
 
                 )}
                 <AddCandidate isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+                <FilterCandidates isOpen={isFilterModalOpen} onClose={() => setIsFilterModalOpen(false)} />
                 <NavbarRight>
                     {isLoggedIn && <div style={{ marginRight: '2px' }}><strong>{user}</strong></div>}
                     <NavbarItem onClick={isLoggedIn ? handleLogout : () => navigate('/login')}>

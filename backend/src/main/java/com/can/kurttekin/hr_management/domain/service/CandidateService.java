@@ -10,4 +10,6 @@ public interface CandidateService {
     CandidateDto getCandidateById(Long id);
     CandidateDto updateCandidate(Long id, CandidateDto candidateDto);
     void deleteCandidate(Long id);
+
+    List<CandidateDto> getCandidatesByCriteria(String position, String militaryStatus, String noticePeriod);
 }

@@ -30,6 +30,14 @@ public class CandidateController {
                 .ok(candidateService.getAllCandidates());
     }
 
+    @GetMapping
+    public ResponseEntity<List<CandidateDto>> getCandidatesByCriteria(
+            @RequestParam(required = false) String position,
+            @RequestParam(required = false) String militaryStatus,
+            @RequestParam(required = false) String noticePeriod) {
+        return ResponseEntity.ok(candidateService.getCandidatesByCriteria(position, militaryStatus, noticePeriod));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CandidateDto> getCandidateById(@PathVariable Long id) {
         return ResponseEntity
@@ -42,6 +50,7 @@ public class CandidateController {
             @RequestBody CandidateDto candidateDto) {
         return ResponseEntity.ok(candidateService.updateCandidate(id, candidateDto));
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCandidate(@PathVariable Long id) {
