@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "./static/css/main.438f06f9.css",
+    "main.js": "./static/js/main.ad9674f5.js",
+    "static/js/453.8f506608.chunk.js": "./static/js/453.8f506608.chunk.js",
+    "static/media/screenshot1.png": "./static/media/screenshot1.692ba88afc0d3be67662.png",
+    "static/media/firefox.png": "./static/media/firefox.898aa2b668cd4d3b5685.png",
+    "static/media/buy-me-a-beer.png": "./static/media/buy-me-a-beer.dbf7b1df50ddb45f1a2f.png",
+    "index.html": "./index.html",
+    "main.438f06f9.css.map": "./static/css/main.438f06f9.css.map",
+    "main.ad9674f5.js.map": "./static/js/main.ad9674f5.js.map",
+    "453.8f506608.chunk.js.map": "./static/js/453.8f506608.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.438f06f9.css",
+    "static/js/main.ad9674f5.js"
+  ]
+}

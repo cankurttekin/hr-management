@@ -49,9 +49,9 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     public List<CandidateDto> getAllCandidates() {
         List<Candidate> candidates = candidateRepository.findAll();
-        if (candidates.isEmpty()) {
-            throw new RuntimeException("No candidates found.");
-        }
+        //if (candidates.isEmpty()) {
+        //    throw new RuntimeException("No candidates found.");
+        //}
 
         return candidates.stream()
                 .map(this::mapToDto)
