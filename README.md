@@ -5,7 +5,7 @@ Design a recruitment system. Must include:
 - CRUD on candidates.
 ### Stack
 - Backend: Java 8+, Spring Boot
-- Database: H2(in prod), PostgreSQL(optional)
+- Database: H2(in dev), PostgreSQL(in prod-optional)
 - Frontend: Angular, Ionic Framework, init with min. 10 candidates
 ## Details
 ### Backend
