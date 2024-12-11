@@ -13,7 +13,7 @@ import java.util.Arrays;
 @Slf4j
 @Configuration
 public class CorsConfig {
-    @Value("${ALLOWED_ORIGINS}")
+    @Value("${ALLOWED_ORIGINS:http://localhost:4200}")
     private String allowedOrigins;
 
     @Bean

@@ -24,7 +24,7 @@ public class User {
     @JsonIgnore
     private String password;
 
-    @OneToMany(mappedBy = "recruiter", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Candidate> candidateList;
 
