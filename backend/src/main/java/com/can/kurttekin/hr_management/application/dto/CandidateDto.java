@@ -1,8 +1,11 @@
 package com.can.kurttekin.hr_management.application.dto;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CandidateDto {
     private Long id;
     private String firstName;
@@ -13,4 +16,6 @@ public class CandidateDto {
     private String phone;
     private String email;
     private String cv;
+
+    // REFACTOR: @Builder
 }

@@ -83,9 +83,11 @@ public class CandidateServiceImpl implements CandidateService {
      * @throws IllegalArgumentException if the candidate with the given ID does not exist.
      */
     @Override
-    public CandidateDto updateCandidate(Long id, CandidateDto candidateDto) {
+    public CandidateDto updateCandidate(Long id,
+                                        CandidateDto candidateDto) {
         Candidate existingCandidate = candidateRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Candidate not found for ID: " + id)); // REFACTOR: CUSTOM EXCEPTION
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Candidate not found for ID: " + id)); // REFACTOR: CUSTOM EXCEPTION
 
         // Set updated attributes of candidate
         existingCandidate.setFirstName(candidateDto.getFirstName());
