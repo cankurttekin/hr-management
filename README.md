@@ -78,7 +78,7 @@ Note: in Fedora 41 docker rpm repo, docker-compose in cli is not supported(yet, 
 docker compose up --build
 ```
 
-### Manually
+### Without Docker
 #### Verify you have JDK 17 installed
 ```
 java -version
