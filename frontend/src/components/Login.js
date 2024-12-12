@@ -63,7 +63,7 @@ const Login = () => {
 
     try {
       await login(username, password); // Call the login function
-      navigate('/candidates'); // Redirect after successful login
+      navigate('/candidates'); // RedirectF after successful login
     } catch (error) {
       setError(error.message); // Set the error message
     }

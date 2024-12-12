@@ -82,7 +82,7 @@ const Candidates = () => {
     'Soyad': 'lastName',
     'Pozisyon': 'position',
     'Askerlik': 'militaryStatus',
-    'Notice': 'noticeDate',
+    'İhbar Tarihi': 'noticeDate',
     'Telefon': 'phone',
     'E-posta': 'email',
     'Cv': 'cv',
@@ -167,7 +167,7 @@ const Candidates = () => {
         <Table>
           <thead>
           <tr>
-            {['Ad', 'Soyad', 'Pozisyon', 'Askerlik', 'Notice', 'Telefon', 'E-posta', 'cv'].map((column) => (
+            {['Ad', 'Soyad', 'Pozisyon', 'Askerlik', 'İhbar Tarihi', 'Telefon', 'E-posta', 'cv'].map((column) => (
                 <th key={column} onClick={() => handleSort(column)} style={styles.tableHeader}>
                   {column.charAt(0).toUpperCase() + column.slice(1)}
                   {sortColumn === columnMap[column] && (
