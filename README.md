@@ -1,13 +1,15 @@
 # Human Resources Management System
 ## Requirements
-Design a recruitment system. Must include:
+Design a recruitment system:
 - A page to view list of candidates
 - CRUD on candidates.
+
 ### Stack
 - Backend: Java 8+, Spring Boot
 - Database: H2(in dev), PostgreSQL(in prod-optional)
 - ~~Frontend: Angular, Ionic Framework, init with min. 10 candidates~~
 - Frontend: React
+
 ## Details
 ### Backend
 #### Candidates Table:
@@ -23,7 +25,7 @@ Design a recruitment system. Must include:
 | email          | Email address                              |
 | cv             | CV file name or path                       |
 
-## Frontend
+### Frontend
 #### Candidate List:
 - A list of registered candidates is displayed.
 - The user can filter the list by position, military status, and notice period.
@@ -36,8 +38,17 @@ Design a recruitment system. Must include:
 #### Delete Operation:
 - Each candidate should have a "Delete" button next to them.
 
-
 # Project Completion Details
+## What's done
+|  | Task |
+| --- | --- |
+| `X` | Backend: Java Spring Boot JDK 17 |
+| `X` | Database: H2 in development + PostgreSQL |
+| `X` | Frontend: Used React instead of Angular |
+| `X` | All required endpoints + login and register + JWT |
+| `X` | CV file upload |
+
+
 ## Build & Run
 
 ### Docker
@@ -90,26 +101,36 @@ npm run build
 npm install -g serve
 serve -s build
 ```
-The frontedn will now be running on port 3000.
+The frontend will now be running on port 3000.
 
 ## Database
 
-#### PostgreSQL 15
+### PostgreSQL
 PostgreSQL Database credentials are configured in .env file(available in repo):
 ```
 POSTGRES_USER=cankurttekin-db-user
 POSTGRES_PASSWORD=cankurttekin-db-pass
 ```
 
-Creating db and user:
+To create db and user:
 ```
 CREATE DATABASE hr_db;
 CREATE USER your_user WITH PASSWORD 'your_password';
 GRANT ALL PRIVILEGES ON DATABASE hr_db TO your_user;
 ```
+
 #### Tables
-#### OPTION1 - Creating tables manuallay:
-> SQL Script in db_scripts/init.sql
+#### OPTION1 - Auto schema generation with Hibernate:
+Add these lines to application.properties file:
+```
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+# To show SQL uncomment:
+# spring.jpa.show-sql=true 
+```
+
+#### OPTION2 - Creating tables manuallay:
+> SQL Script provided in db_scripts/ directory.
 ```
 -- Create the `app_user` table
 CREATE TABLE app_user (
@@ -134,7 +155,8 @@ CREATE TABLE candidates (
     CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES app_user (id) ON DELETE CASCADE
 );
 ```
-Verify tables:
+
+To verify tables run this in psql:
 ```
 \dt
 ```
@@ -143,14 +165,7 @@ or
 SELECT * FROM information_schema.tables WHERE table_schema = 'public';
 ```
 
-#### OPTION2 - Auto schema generation with Hibernate:
-Add these lines to application.properties file:
-```
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
-# To show SQL uncomment:
-# spring.jpa.show-sql=true 
-```
+
 
 ## Endpoints
 | Action             | HTTP Method | Endpoint                             | Description                                    |
