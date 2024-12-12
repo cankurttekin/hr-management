@@ -20,7 +20,7 @@ const AddCandidate = ({ isOpen, onClose }) => {
   const [noticePeriod, setNoticePeriod] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-  const [cv, setCv] = useState('');
+  const [cvFile, setCvFile] = useState(null); // To store the CV file
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
@@ -28,12 +28,15 @@ const AddCandidate = ({ isOpen, onClose }) => {
     e.preventDefault();
     setErrorMessage(''); // Reset error message
 
-    if (!firstName || !lastName || !email || !phone) {
-      setErrorMessage('Lutfen tum alanlari doldurunuz.');
+    // Validation check
+    if (!firstName || !lastName || !email || !phone || !cvFile) {
+      setErrorMessage('Lütfen tüm alanları doldurunuz.');
       return;
     }
 
-    const candidate = {
+    // Prepare form data to send as multipart
+    const formData = new FormData();
+    formData.append('candidate', JSON.stringify({
       firstName,
       lastName,
       position,
@@ -41,14 +44,15 @@ const AddCandidate = ({ isOpen, onClose }) => {
       noticePeriod,
       phone,
       email,
-      cv
-    };
+    }));
+    formData.append('cvFile', cvFile); // Append the CV file
 
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post(`${REACT_APP_BACKEND_URL}/candidates`, candidate, {
+      const response = await axios.post(`${REACT_APP_BACKEND_URL}/candidates`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
+          //'Content-Type': 'multipart/form-data',
         },
       });
 
@@ -60,7 +64,7 @@ const AddCandidate = ({ isOpen, onClose }) => {
       }
     } catch (error) {
       console.error('Error adding candidate:', error);
-      setErrorMessage('Failed to add candidate. Please try again.');
+      setErrorMessage('Aday eklenirken bir hata oluştu. Lütfen tekrar deneyin.');
     }
   };
 
@@ -69,11 +73,10 @@ const AddCandidate = ({ isOpen, onClose }) => {
     setLastName('');
     setPosition('');
     setMilitaryStatus('');
-    setMilitaryStatus('');
     setNoticePeriod('');
     setPhone('');
     setEmail('');
-    setCv('');
+    setCvFile(null); // Reset CV file
   };
 
   return (
@@ -121,6 +124,14 @@ const AddCandidate = ({ isOpen, onClose }) => {
               />
             </div>
             <div className="form-group">
+              <input
+                  type="text"
+                  placeholder="Pozisyon"
+                  value={position}
+                  onChange={(e) => setPosition(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
               <select
                   value={militaryStatus}
                   onChange={(e) => setMilitaryStatus(e.target.value)}
@@ -133,10 +144,10 @@ const AddCandidate = ({ isOpen, onClose }) => {
             </div>
           </div>
           <div className="form-row">
-            <div className="form-group">
+            <div className="form-group">İhbar Tarihi:
               <input
                   type="date"
-                  placeholder="noticePeriod"
+                  placeholder="Notice Period"
                   value={noticePeriod}
                   onChange={(e) => setNoticePeriod(e.target.value)}
               />
@@ -154,18 +165,21 @@ const AddCandidate = ({ isOpen, onClose }) => {
             <div className="form-group">
               <input
                   type="email"
-                  placeholder="e-posta"
+                  placeholder="E-posta"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </div>
-          <textarea
-              placeholder="cv"
-              value={cv}
-              onChange={(e) => setCv(e.target.value)}
-              rows="4"
-          />
+          <div className="form-row">
+            <div className="form-group">
+              CV:
+              <input
+                  type="file"
+                  onChange={(e) => setCvFile(e.target.files[0])} // Store the selected CV file
+              />
+            </div>
+          </div>
           <button onClick={handleSubmit}>Gönder</button>
         </modal-content>
       </Modal>

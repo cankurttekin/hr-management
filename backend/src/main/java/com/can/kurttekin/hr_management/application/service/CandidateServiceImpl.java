@@ -5,10 +5,17 @@ import com.can.kurttekin.hr_management.domain.model.Candidate;
 import com.can.kurttekin.hr_management.domain.service.CandidateService;
 import com.can.kurttekin.hr_management.infrastructure.repository.CandidateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -18,6 +25,8 @@ import java.util.stream.Collectors;
 @Service
 public class CandidateServiceImpl implements CandidateService {
 
+    @Value("${file.upload-dir}")
+    private String uploadDir;
     /**
      * Injects the CandidateRepository dependency.
      */
@@ -28,15 +37,25 @@ public class CandidateServiceImpl implements CandidateService {
      * Creates candidate from given candidate dto.
      *
      * @param candidateDto DTO of the candidate to create.
+     * @param cvFile CV of the candidate
      * @return Saved candidate.
      */
     @Transactional
     @Override
-    public CandidateDto createCandidate(CandidateDto candidateDto) {
-        Candidate candidate = mapToEntity(candidateDto);
-        assert candidate != null;
-        Candidate savedCandidate = candidateRepository.save(candidate);
-        return mapToDto(savedCandidate);
+    public CandidateDto createCandidate(CandidateDto candidateDto, MultipartFile cvFile) {
+        try {
+            if (cvFile != null && !cvFile.isEmpty()) {
+                String fileName = storeFile(cvFile);
+                candidateDto.setCv(fileName);
+            }
+
+            Candidate candidate = mapToEntity(candidateDto);
+            Candidate savedCandidate = candidateRepository.save(candidate);
+            return mapToDto(savedCandidate);
+
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to store CV file", e);
+        }
     }
 
     /**
@@ -130,6 +149,26 @@ public class CandidateServiceImpl implements CandidateService {
         candidateRepository.deleteById(id);
     }
 
+
+    /**
+     * Stores candidates cv file.
+     *
+     * @param file
+     * @return String /path/to/file/uuid+resume.pdf
+     */
+    private String storeFile(MultipartFile file) throws IOException {
+        Path targetDir = Paths.get(uploadDir).toAbsolutePath().normalize();
+
+        if (!Files.exists(targetDir)) {
+            Files.createDirectories(targetDir);
+        }
+
+        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        Path filePath = targetDir.resolve(fileName);
+
+        file.transferTo(filePath.toFile());
+        return uploadDir + "/" + fileName;
+    }
 
     // DTO MAPPINGS
     private CandidateDto mapToDto(Candidate candidate) {

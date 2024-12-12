@@ -2,10 +2,12 @@ package com.can.kurttekin.hr_management.presentation.rest;
 
 import com.can.kurttekin.hr_management.application.dto.CandidateDto;
 import com.can.kurttekin.hr_management.domain.service.CandidateService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,10 +20,27 @@ public class CandidateController {
 
     @PostMapping
     public ResponseEntity<CandidateDto> createCandidate(
-            @RequestBody CandidateDto candidateDto) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(candidateService.createCandidate(candidateDto));
+            @RequestParam("candidate") String candidateJson,
+            @RequestParam(value = "cvFile") MultipartFile cvFile) {
+
+
+        try {
+            // Convert the JSON string into a CandidateDto
+            ObjectMapper objectMapper = new ObjectMapper();
+            CandidateDto candidateDto = objectMapper.readValue(candidateJson, CandidateDto.class);
+
+            // Call the service with the candidateDto and cvFile
+            CandidateDto savedCandidate = candidateService.createCandidate(candidateDto, cvFile);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedCandidate);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+
+        // CandidateDto savedCandidate = candidateService.createCandidate(candidateDto, cvFile);
+        //return ResponseEntity.status(HttpStatus.CREATED).body(savedCandidate);
     }
 
     @GetMapping
@@ -30,7 +49,7 @@ public class CandidateController {
                 .ok(candidateService.getAllCandidates());
     }
 
-    @GetMapping
+    @GetMapping("/filter")
     public ResponseEntity<List<CandidateDto>> getCandidatesByCriteria(
             @RequestParam(required = false) String position,
             @RequestParam(required = false) String militaryStatus,
