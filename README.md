@@ -38,6 +38,7 @@ Design a recruitment system:
 #### Delete Operation:
 - Each candidate should have a "Delete" button next to them.
 
+## Screenshots
 <img src="/assets/candidates.png"
 alt="candidates page">
 
