@@ -23,15 +23,6 @@ Design a recruitment system. Must include:
 | email          | Email address                              |
 | cv             | CV file name or path                       |
 
-#### CRUD API:
-| Action             | HTTP Method | Endpoint                             | Description                                    |
-|--------------------|-------------|--------------------------------------|------------------------------------------------|
-| Aday ekleme        | POST        | /api/candidates                      | Add a new candidate                            |
-| Aday listeleme     | GET         | /api/candidates                      | List all candidates                           |
-| Aday güncelleme    | PUT         | /api/candidates/{id}                 | Update an existing candidate by ID            |
-| Aday silme         | DELETE      | /api/candidates/{id}                 | Delete a candidate by ID                      |
-| Filtreleme         | GET         | /api/candidates?position={position}&militaryStatus={status}&noticePeriod={period} | Filter candidates by position, military status, and notice period |
-
 ## Frontend
 #### Candidate List:
 - A list of registered candidates is displayed.
@@ -56,6 +47,6 @@ Design a recruitment system. Must include:
 | Aday listeleme     | GET         | /api/candidates                      | List all candidates                           |
 | Aday güncelleme    | PUT         | /api/candidates/{id}                 | Update an existing candidate by ID            |
 | Aday silme         | DELETE      | /api/candidates/{id}                 | Delete a candidate by ID                      |
-| Filtreleme         | GET         | /api/candidates?position={position}&militaryStatus={status}&noticePeriod={period} | Filter candidates by position, military status, and notice period |
+| Filtreleme         | GET         | /api/candidates/filter?position={position}&militaryStatus={status}&noticePeriod={period} | Filter candidates by position, military status, and notice period |
 | login    | POST         | /api/auth/login                | Login with username and password            |
 | register         | POST      | /api/auth/register                 | Register                      |
