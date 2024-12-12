@@ -39,7 +39,119 @@ Design a recruitment system. Must include:
 
 # Project Completion Details
 ## Build & Run
+
+### Docker
+In the root of repo:
+```
+docker-compose up --build
+```
+This will build and run frontend, backend and postgresql.
+> localhost:8080 Backend
+
+> localhost:3000 Frontend
+
+> localhost:5432 PostgreSQL
+
+```
+Note: in Fedora 41 docker rpm repo, docker-compose in cli is not supported(yet, as i know). use this instead:
+docker compose up --build
+```
+
+### Manually
+#### Verify you have JDK 17 installed
+```
+java -version
+```
+
+#### Verify you have Maven
+```
+mvn -version
+```
+
+#### Verify you have node.js 20 or later
+```
+node -v
+npm -v
+```
+
+#### Build and Run the Backend
+```
+cd backend
+mvn clean package -Dmaven.test.skip=true
+java -jar target/backend.jar
+```
+The backend will now be running on port 8080.
+
+#### Build and Run the Frontend
+```
+cd frontend
+npm install
+npm run build
+npm install -g serve
+serve -s build
+```
+The frontedn will now be running on port 3000.
+
 ## Database
+
+#### PostgreSQL 15
+PostgreSQL Database credentials are configured in .env file(available in repo):
+```
+POSTGRES_USER=cankurttekin-db-user
+POSTGRES_PASSWORD=cankurttekin-db-pass
+```
+
+Creating db and user:
+```
+CREATE DATABASE hr_db;
+CREATE USER your_user WITH PASSWORD 'your_password';
+GRANT ALL PRIVILEGES ON DATABASE hr_db TO your_user;
+```
+#### Tables
+#### OPTION1 - Creating tables manuallay:
+> SQL Script in db_scripts/init.sql
+```
+-- Create the `app_user` table
+CREATE TABLE app_user (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Create the `candidates` table
+CREATE TABLE candidates (
+    id SERIAL PRIMARY KEY,
+    user_id BIGINT,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    position VARCHAR(255) NOT NULL,
+    military_status VARCHAR(50),
+    notice_period VARCHAR(255) NOT NULL,
+    phone VARCHAR(50) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    cv VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES app_user (id) ON DELETE CASCADE
+);
+```
+Verify tables:
+```
+\dt
+```
+or
+```
+SELECT * FROM information_schema.tables WHERE table_schema = 'public';
+```
+
+#### OPTION2 - Auto schema generation with Hibernate:
+Add these lines to application.properties file:
+```
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+# To show SQL uncomment:
+# spring.jpa.show-sql=true 
+```
+
 ## Endpoints
 | Action             | HTTP Method | Endpoint                             | Description                                    |
 |--------------------|-------------|--------------------------------------|------------------------------------------------|
