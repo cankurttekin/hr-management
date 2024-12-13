@@ -38,6 +38,7 @@ Design a recruitment system:
 #### Delete Operation:
 - Each candidate should have a "Delete" button next to them.
 
+## Screenshots
 <img src="/assets/candidates.png"
 alt="candidates page">
 
@@ -77,7 +78,7 @@ Note: in Fedora 41 docker rpm repo, docker-compose in cli is not supported(yet, 
 docker compose up --build
 ```
 
-### Manually
+### Without Docker
 #### Verify you have JDK 17 installed
 ```
 java -version
